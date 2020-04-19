@@ -1,4 +1,4 @@
-package com.example.botcontroller;
+package com.evolvingkid.botcontroller;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

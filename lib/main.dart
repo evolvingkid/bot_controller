@@ -1,3 +1,4 @@
+import 'package:botcontroller/screens/signup/siginup_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -9,19 +10,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        accentColor: Color(0xff5933AA)
       ),
-      home: HomePage(),
+      home: SiginUpPage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Data'),
-      ),
-    );
-  }
-}
+
