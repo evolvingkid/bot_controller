@@ -1,3 +1,4 @@
+import 'package:botcontroller/screens/opt/opt_page.dart';
 import 'package:botcontroller/screens/signin/signin_page.dart';
 import 'package:botcontroller/screens/signup/signup_page.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,9 @@ class MyApp extends StatelessWidget {
           ThemeData(primarySwatch: Colors.blue, accentColor: Color(0xff5933AA)),
       routes: {
         SingnUpPage.routName: (ctx) => SingnUpPage(),
+        OTPPage.routeName: (ctx) => OTPPage(),
       },
-      home: //SiginUpPage()
-          SigninPage(),
+      home: SigninPage(),
     );
   }
 }

@@ -1,10 +1,10 @@
+import 'package:botcontroller/screens/opt/opt_page.dart';
 import 'package:botcontroller/screens/signup/MiddlePartOfSignUpPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SingnUpPage extends StatelessWidget {
-
-static const routName = './siginUpPage';
+  static const routName = './siginUpPage';
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,11 @@ static const routName = './siginUpPage';
         child: Column(
           children: <Widget>[
             topBar(screenHeight, screenWidth),
-            MiddlePartOfSignUpPage(screenHeight: screenHeight)
+            MiddlePartOfSignUpPage(
+              screenHeight: screenHeight,
+              screenWidth: screenWidth,
+              route: _slideTrainstionRoute,
+            )
           ],
         ),
       ),
@@ -62,8 +66,11 @@ static const routName = './siginUpPage';
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
-              child: SvgPicture.asset('assets/images/singup_page_logo.svg')),
+          Hero(
+            tag: '1',
+            child: Container(
+                child: SvgPicture.asset('assets/images/singup_page_logo.svg')),
+          ),
           const SizedBox(height: 10),
           Text(
             'Welcome to Bot',
@@ -74,4 +81,28 @@ static const routName = './siginUpPage';
       ),
     );
   }
+}
+
+Route _slideTrainstionRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => OTPPage(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(1.0, 0.0);
+      var end = Offset.zero;
+
+      var tween =
+          Tween(begin: begin, end: end).chain(CurveTween(curve: Curves.easeIn));
+
+      var fadeTween =
+          Tween(begin: 0.0, end: 1.0).chain(CurveTween(curve: Curves.easeIn));
+
+      return FadeTransition(
+        opacity: animation.drive(fadeTween),
+        child: SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        ),
+      );
+    },
+  );
 }

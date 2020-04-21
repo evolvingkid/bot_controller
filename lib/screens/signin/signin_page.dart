@@ -1,3 +1,4 @@
+import 'package:botcontroller/helpers/custom_route_page.dart';
 import 'package:botcontroller/screens/signup/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,8 +18,11 @@ class SigninPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              child: SvgPicture.asset('assets/images/login_page_logo.svg'),
+            Hero(
+              tag: '1',
+              child: Container(
+                child: SvgPicture.asset('assets/images/login_page_logo.svg'),
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -54,7 +58,10 @@ class SigninPage extends StatelessWidget {
           ),
           textColor: Theme.of(context).accentColor,
           onPressed: () {
-            Navigator.of(context).pushNamed(SingnUpPage.routName);
+            //  Navigator.of(context).pushNamed(SingnUpPage.routName);
+            Navigator.of(context).push(CustomRoute(
+              builder: (ctx) => SingnUpPage(),
+            ));
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15),

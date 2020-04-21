@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "581005554727",
+    "firebase_url": "https://telegrambot-42384.firebaseio.com",
+    "project_id": "telegrambot-42384",
+    "storage_bucket": "telegrambot-42384.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581005554727:android:9c77160a89ae57942d4a02",
+        "android_client_info": {
+          "package_name": "com.evolvingkid.botcontroller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "581005554727-letmo3r35itfr1lus4i9bh0g5g2j2955.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9jKC19o6gGfgcYlTmOL-p6uUifFU_hI8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "581005554727-letmo3r35itfr1lus4i9bh0g5g2j2955.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
