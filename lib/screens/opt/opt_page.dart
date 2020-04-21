@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '.././../core/firebase_mob_auth.dart';
 
 class OTPPage extends StatefulWidget {
   static const routeName = './OTPPage';
@@ -66,7 +67,7 @@ class _OTPPageState extends State<OTPPage> {
     }
   }
 
-  submit() {
+  submit() async {
     dynamic _val;
     topValueBar.forEach((f) {
       if (f['value'] != null) {
@@ -78,6 +79,9 @@ class _OTPPageState extends State<OTPPage> {
       }
     });
     print(_val);
+
+    FirebaseMobAuth.smsVerification(
+        FirebaseMobAuth.verificationIds, _val, FirebaseMobAuth.auths);
   }
 
   @override

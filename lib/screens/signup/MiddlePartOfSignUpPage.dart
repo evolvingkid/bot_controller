@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/firebase_mob_auth.dart';
 
 class MiddlePartOfSignUpPage extends StatefulWidget {
   MiddlePartOfSignUpPage(
@@ -16,6 +17,7 @@ class _MiddlePartOfSignUpPageState extends State<MiddlePartOfSignUpPage> {
   double textFeildPostion = 1;
   double textFeildOpacity = 0.0;
   double animatedBtnOpacity = 0.0;
+  String _mobNumber;
 
   Future animationFunction() async {
     Future.delayed(const Duration(milliseconds: 300), () {
@@ -27,12 +29,27 @@ class _MiddlePartOfSignUpPageState extends State<MiddlePartOfSignUpPage> {
     });
   }
 
+  optPageRedirect() {
+    Navigator.of(context).push(widget.route());
+  }
+
+ void submitMobNumber() async {
+    _mobNumber = '+91$_mobNumber';
+    var _fetchData =
+        await FirebaseMobAuth.loginUser(_mobNumber, context, () {}, () {
+      optPageRedirect();
+    });
+
+    print(_fetchData.toString());
+  }
+
   @override
   void didChangeDependencies() {
     animationFunction();
     super.didChangeDependencies();
   }
 
+// *build
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -70,7 +87,7 @@ class _MiddlePartOfSignUpPageState extends State<MiddlePartOfSignUpPage> {
             borderRadius: new BorderRadius.circular(5.0),
           ),
           onPressed: () {
-            Navigator.of(context).push(widget.route());
+            submitMobNumber();
           },
           textColor: Colors.white,
           color: Theme.of(context).accentColor,
@@ -103,6 +120,10 @@ class _MiddlePartOfSignUpPageState extends State<MiddlePartOfSignUpPage> {
         child: Container(
             width: screenWidth * 0.7,
             child: TextField(
+              onChanged: (val) {
+                _mobNumber = val;
+              },
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                   hintStyle: TextStyle(color: Colors.black),
                   hintText: 'India (+91) '),
