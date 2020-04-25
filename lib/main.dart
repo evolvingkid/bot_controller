@@ -1,3 +1,4 @@
+import 'package:botcontroller/screens/application_form/acc_application_form.dart';
 import 'package:botcontroller/screens/opt/opt_page.dart';
 import 'package:botcontroller/screens/signin/signin_page.dart';
 import 'package:botcontroller/screens/signup/signup_page.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         SingnUpPage.routName: (ctx) => SingnUpPage(),
         OTPPage.routeName: (ctx) => OTPPage(),
       },
-      home: SigninPage(),
+      home: SignInAplicationForm(),
     );
   }
 }
