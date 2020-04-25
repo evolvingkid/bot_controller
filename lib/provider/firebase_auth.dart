@@ -1,10 +1,48 @@
-import 'dart:developer';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FirebaseAuth with ChangeNotifier {
   final Firestore db = Firestore.instance;
+  Map userData;
+
+  Future<void> accSaver() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String parsedJson = json.encode({
+      'gmail': userData['gmail'],
+      'academic': userData['academic'],
+      'name': userData['name'],
+      'mobNumber': userData['mobNumber']
+    });
+    bool _isComplete = await preferences.setString('userData', parsedJson);
+    notifyListeners();
+  }
+
+  Future<bool> accVerification(String _docId) async {
+    try {
+      final fetchdata = await db.collection('admins').document(_docId).get();
+
+      if (fetchdata.exists) {
+        if (fetchdata.data.containsKey('admin')) {
+          userData = {
+            'gmail': fetchdata.data['gmail'],
+            'academic': fetchdata.data['academic'],
+            'name': fetchdata.data['name'],
+            'mobNumber': _docId
+          };
+          await accSaver();
+          return true;
+        }
+        return false;
+      }
+      return false;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
 
 // to chech acc is exist in firestore
   Future<bool> accChecker(String docId) async {

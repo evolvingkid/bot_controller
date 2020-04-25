@@ -1,5 +1,7 @@
+import 'package:botcontroller/provider/firebase_auth.dart';
 import 'package:botcontroller/screens/application_form/acc_application_form.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '.././../core/firebase_mob_auth.dart';
 
 class OTPPage extends StatefulWidget {
@@ -21,6 +23,7 @@ class _OTPPageState extends State<OTPPage> {
   Map _type;
   bool _isloading = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool _isVerified;
   List btnsTap = [
     {'type': 'number', 'value': 1},
     {'type': 'number', 'value': 2},
@@ -70,6 +73,33 @@ class _OTPPageState extends State<OTPPage> {
     }
   }
 
+  Future<void> accVerification(bool _val) async {
+    if (_val) {
+      _isVerified = await Provider.of<FirebaseAuth>(context, listen: false)
+          .accVerification(_type['mobileNumber']);
+
+      if (_isVerified) {
+        Navigator.of(context).pop();
+      }
+
+      if (!_isVerified) {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text('Please ensure you have an account or it is verified'),
+          duration: Duration(seconds: 3),
+        ));
+      }
+    } else {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Error Occured please check you mobile number'),
+        duration: Duration(seconds: 3),
+      ));
+    }
+
+    setState(() {
+      _isloading = false;
+    });
+  }
+
   submit() async {
     setState(() {
       _isloading = true;
@@ -92,6 +122,11 @@ class _OTPPageState extends State<OTPPage> {
     print(FirebaseMobAuth.verificationIds);
 
     if (_isVerified) {
+      if (_type['type'] == 'signIn') {
+        print('sigin');
+        accVerification(_isVerified);
+        return;
+      }
       print(_type['mobileNumber']);
       Navigator.of(context).pushNamed(SignInAplicationForm.routeName,
           arguments: _type['mobileNumber']);
