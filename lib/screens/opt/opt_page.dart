@@ -1,3 +1,4 @@
+import 'package:botcontroller/screens/application_form/acc_application_form.dart';
 import 'package:flutter/material.dart';
 import '.././../core/firebase_mob_auth.dart';
 
@@ -17,7 +18,9 @@ class _OTPPageState extends State<OTPPage> {
 
   int addedTile = 1;
   double finalSubmitVal;
-
+  Map _type;
+  bool _isloading = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   List btnsTap = [
     {'type': 'number', 'value': 1},
     {'type': 'number', 'value': 2},
@@ -68,6 +71,9 @@ class _OTPPageState extends State<OTPPage> {
   }
 
   submit() async {
+    setState(() {
+      _isloading = true;
+    });
     dynamic _val;
     topValueBar.forEach((f) {
       if (f['value'] != null) {
@@ -80,8 +86,34 @@ class _OTPPageState extends State<OTPPage> {
     });
     print(_val);
 
-    FirebaseMobAuth.smsVerification(
+    bool _isVerified = await FirebaseMobAuth.smsVerification(
         FirebaseMobAuth.verificationIds, _val, FirebaseMobAuth.auths);
+
+    print(FirebaseMobAuth.verificationIds);
+
+    if (_isVerified) {
+      print(_type['mobileNumber']);
+      Navigator.of(context).pushNamed(SignInAplicationForm.routeName,
+          arguments: _type['mobileNumber']);
+    } else {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        content: Text('Error occured try again'),
+        duration: Duration(seconds: 3),
+      ));
+
+      Future.delayed(const Duration(seconds: 3), () {
+        Navigator.of(context).pop();
+      });
+    }
+    setState(() {
+      _isloading = false;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    _type = ModalRoute.of(context).settings.arguments;
+    super.didChangeDependencies();
   }
 
   @override
@@ -90,6 +122,7 @@ class _OTPPageState extends State<OTPPage> {
     final screenWidth = MediaQuery.of(context).size.width;
     // print(btnsTap[1]['value']);
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Color(0xff5933AA),
       body: Container(
         height: screenHeight,
@@ -102,8 +135,9 @@ class _OTPPageState extends State<OTPPage> {
             const SizedBox(height: 20),
             // ?param: this recives the mobile number as the secound parameter
             msgBelowHeading(screenWidth, '********15'),
-
-            enteredOTPViewer(screenWidth, topValueBar),
+            _isloading
+                ? Center(child: LinearProgressIndicator())
+                : enteredOTPViewer(screenWidth, topValueBar),
             SizedBox(height: 20),
             Container(
               width: screenWidth * 0.6,

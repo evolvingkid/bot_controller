@@ -18,7 +18,6 @@ class SingnUpPage extends StatelessWidget {
             MiddlePartOfSignUpPage(
               screenHeight: screenHeight,
               screenWidth: screenWidth,
-              route: _slideTrainstionRoute,
             )
           ],
         ),

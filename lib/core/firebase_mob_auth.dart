@@ -19,11 +19,10 @@ class FirebaseMobAuth {
 
           if (user != null) {
             debugPrint('verification is done automatically and sucess');
-            //TODO: the submit process function need to initilised
-            //  submitProcess(true, true);
+              submitProcess(true);
           } else {
             debugPrint('error');
-            //submitProcess(false, true);
+            submitProcess(false);
           }
         },
         verificationFailed: (AuthException exception) {
@@ -50,6 +49,7 @@ class FirebaseMobAuth {
       result = await _auth.signInWithCredential(credential);
 
       print(result);
+      return true; 
     } catch (e) {
       print(e);
       return false;
