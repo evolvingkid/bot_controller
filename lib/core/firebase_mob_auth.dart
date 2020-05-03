@@ -12,7 +12,7 @@ class FirebaseMobAuth {
 
     _auth.verifyPhoneNumber(
         phoneNumber: phone,
-        timeout: Duration(seconds: 120),
+        timeout: Duration(seconds: 100),
         verificationCompleted: (AuthCredential credential) async {
           AuthResult result = await _auth.signInWithCredential(credential);
           FirebaseUser user = result.user;
@@ -53,10 +53,7 @@ class FirebaseMobAuth {
     } catch (e) {
       print(e);
       return false;
-      //debugPrint('catch error');
-      // submitProcess(false, false);
-      // debugPrint(e);
-      //return false;
+
     }
   }
 }

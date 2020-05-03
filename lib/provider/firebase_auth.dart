@@ -71,4 +71,21 @@ class FirebaseAuth with ChangeNotifier {
       throw e;
     }
   }
+
+  Future<void> autoLogin() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    try {
+      if (preferences.containsKey('userData')) {
+        String fetchData = preferences.getString('userData');
+        Map _decodeVal = json.decode(fetchData);
+        userData = {
+          'gmail': _decodeVal['gmail'],
+          'academic': _decodeVal['academic'],
+          'name': _decodeVal['name'],
+          'mobNumber': _decodeVal['mobNumber']
+        };
+        notifyListeners();
+      }
+    } catch (e) {}
+  }
 }
