@@ -32,5 +32,19 @@ App id as set to com.evolvingkid.botcontroller (change if you need)
 In lib folder :
 * helper container page route fade animation.
 * core contain firebase auth
+* models contain data models
+### Features Represntation
+All the feature listed in the app are store in a list which take Options.
+```dart 
+ List<Options> options = [];
+```
+This is saved in the provider/optionsData.dart file.
+Options takes data as
+```dart
+ Options({String name, IconData icon, String catergory, String pageRouteName})
 
+```
 
+#### Options catergory
+It takes string as data
+* mainPage: means category that shows on main page grid
